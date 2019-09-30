@@ -1,0 +1,22 @@
+Agenda - 
+1. Check in about JS
+	- Quiz (maybe)
+	- read w3schools tutorial on arrays/lists
+2. Set up Git
+	- what is github
+	- create accts (if haven't yet)
+	- join DVHackers, and group-jacob
+	- git add, commit, push tutorial
+	- warnings
+3. NN tutorial
+	- Matrix math
+	- what is a NN
+		- weights and biases
+		- activations
+	- NN class structure
+4. frontend intro
+	- HTML/CSS/JS relationship tutorial
+	- intro to Pixi.js
+5. split up, get bread
+	- Reed/Brandon - build NN constructor, feedforward function
+	- Jacob/Benedict - get simulation up, try to make a jumping block
