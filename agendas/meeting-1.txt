@@ -1,4 +1,4 @@
-Agenda - 
+Agenda 30.9.2019 - 
 1. Check in about JS
 	- Quiz (maybe)
 	- read w3schools tutorial on arrays/lists
@@ -6,7 +6,7 @@ Agenda -
 	- what is github
 	- create accts (if haven't yet)
 	- join DVHackers, and group-jacob
-	- git add, commit, push tutorial
+	- git add, commit, push, branch tutorial
 	- warnings
 3. NN tutorial
 	- Matrix math
