@@ -4,7 +4,7 @@ class Matrix
     {
         //This function "constructs" objects, so every time you call "new Matrix(..)" anywhere it executes this function
         //I want you to initialize a 2d array with the number of rows/cols specified by the parameters passed in. every value can just be 0 for now
-        /*this.mat = [];
+        this.mat = [];
         if (cols != 0)
         {
           for (let r = 0; r < rows; r++)
@@ -15,8 +15,7 @@ class Matrix
               this.mat[r].push(0);
             }
           }
-        }*/
-        this.mat = [[0, 3, 5], [5, 5, 2]]; //test data to test function mult
+        }
     }
 
     mult(vector)
@@ -38,19 +37,71 @@ class Matrix
           tempSum = 0;
         }
       }
+      else
+      {
+        throw "vector rows are not equal to matrix columns";
+      }
 
       return product;
     }
+
+    set(r, c, val)
+    {
+      if (this.mat.length < r || this.mat[0].length < c)
+      {
+        throw "coordinates out of bound";
+      }
+      else
+      {
+        this.mat[r][c] = val;
+      }
+    }
+
+    add(inputMat)
+    {
+      if (this.mat.length === inputMat.length && this.mat[0].length === inputMat[0].length)
+      {
+        for (let r = 0; r < this.mat.length; r++)
+        {
+          for (let c = 0; c < this.mat[0].length; c++)
+          {
+            this.mat[r][c] += inputMat[r][c];
+          }
+        }
+      }
+      else
+      {
+        throw "input array is not the same size as array property";
+      }
+    }
   }
 
-  let myMatrix = new Matrix(3, 2);
-
-  for (let i = 0; i < myMatrix.mat.length; i++)
+  //testing
+  const size = 2;
+  let myMatrix = new Matrix(size, size);
+  for (let i = 0; i < size; i++) //fill matrix with random vals, 0 - 10
+  {
+    for (let j = 0; j < size; j++)
+    {
+      myMatrix.set(i, j, Math.floor(Math.random() * 11));
+    }
+  }
+  for (let i = 0; i < myMatrix.mat.length; i++) //print the matrix
   {
     console.log(myMatrix.mat[i].join(', '));
   }
 
-  let vect = [3, 4, 3];
+  myMatrix.add(myMatrix.mat);
+  for (let i = 0; i < myMatrix.mat.length; i++) //print the matrix
+  {
+    console.log(myMatrix.mat[i].join(', '));
+  }
+
+  let vect = [];
+  for (let i = 0; i < size; i++) //fill vector with random vals, 0 - 10
+    vect.push(Math.floor(Math.random() * 11));
+
+  myMatrix.mult(vect)
   console.log('vector to multiply by: ' + vect);
-  console.log('multiplication result: ' + myMatrix.mult([3, 4, 3]));
+  console.log('multiplication result: ' + myMatrix.mult(vect));
 
