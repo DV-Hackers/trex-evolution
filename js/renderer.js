@@ -1,4 +1,4 @@
-    
+
 
 class Graphic
 {
@@ -13,7 +13,7 @@ class Graphic
 
 		print(this.image.width);
 
-		
+
 	}
 
 	output()
@@ -26,7 +26,7 @@ class Graphic
 		{
 			point(this.xPos + x,this.yPos + this.hitBox[x]);
 		}*/
-		
+
 		//line(this.xPos, this.yPos, this.xPos + this.image.width, this.yPos);
 		//text(this.image.width, this.xPos, this.yPos + 20);
 		//print(this.image.width);
@@ -84,7 +84,6 @@ let yPosition = 0;
 
 function draw()
 {
-
 	background(200);
 	background(255);
 
@@ -92,14 +91,14 @@ function draw()
 	{
 		ground[0].xPos = xLand + i;
 		ground[0].yPos = yLand;
-		ground[0].output();	
+		ground[0].output();
 	}
 
 	/*for (let i = 0 ; i < cactus.length; i++)
 	{
 		cactus[i].xPos = i * 50 + 50;
 		cactus[i].yPos = i * 50 + 50;
-		cactus[i].output(); 
+		cactus[i].output();
 	}*/
 
 	cactus[cactusIndex].xPos = xLand - 72;
@@ -144,8 +143,8 @@ function draw()
 		}
 		if (yPosition > 0)
 		{
-			dinosaurIndex = 0; 
-		}		
+			dinosaurIndex = 0;
+		}
 
 		dinosaurTimer++;
 	}
@@ -153,9 +152,9 @@ function draw()
 	dinosaur[dinosaurIndex].yPos = yLand - yPosition;
 
 	dinosaur[dinosaurIndex].xPos = 100;
-	
+
 	dinosaur[dinosaurIndex].output();
-	
+
 	if (xLand <= 0)
 	{
 		xLand = 800;
@@ -166,5 +165,3 @@ function draw()
 	ellipse(mouseX, mouseY, 10, 10);
 
 }
-
-
