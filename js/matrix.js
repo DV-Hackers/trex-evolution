@@ -1,6 +1,6 @@
 class Matrix
 {
-    constructor(rows, cols)
+    constructor(rows, cols, zeroed)
     {
         //This function "constructs" objects, so every time you call "new Matrix(..)" anywhere it executes this function
         //I want you to initialize a 2d array with the number of rows/cols specified by the parameters passed in. every value can just be 0 for now
@@ -12,10 +12,25 @@ class Matrix
             this.mat.push([]);
             for (let c = 0; c < cols; c++)
             {
-              this.mat[r].push(0);
+              if (zeroed) // so as to zero the bias matrices initially
+                this.mat[r].push(0);
+              else
+                this.mat[r].push(Math.random());
+
             }
           }
         }
+    }
+
+    static arrayToMatrixVector(arr)
+    {
+      let tempMatrix = new Matrix(arr.length, 1);
+      for (let i = 0; i < arr.length; i++)
+      {
+        tempMatrix.set(i, 1, arr[i]);
+      }
+
+      return tempMatrix;
     }
 
     mult(vector)
@@ -74,6 +89,14 @@ class Matrix
         throw "input array is not the same size as array property";
       }
     }
+
+    applyActivation(activation)
+    {
+      for (let elem of this.mat)
+      {
+        elem = activation(elem);
+      }
+    }
   }
 
   //testing
@@ -104,4 +127,3 @@ class Matrix
   myMatrix.mult(vect)
   console.log('vector to multiply by: ' + vect);
   console.log('multiplication result: ' + myMatrix.mult(vect));
-
