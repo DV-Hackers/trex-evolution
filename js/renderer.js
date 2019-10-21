@@ -1,5 +1,5 @@
 
-
+/*
 class Graphic
 {
 	constructor(imageFile,xAdd= 0,yAdd = 0)
@@ -25,7 +25,7 @@ class Graphic
 		/*for (let x = 0; x < this.hitBox.length; x++)
 		{
 			point(this.xPos + x,this.yPos + this.hitBox[x]);
-		}*/
+		}
 
 		//line(this.xPos, this.yPos, this.xPos + this.image.width, this.yPos);
 		//text(this.image.width, this.xPos, this.yPos + 20);
@@ -50,7 +50,7 @@ function preload()
 	dinosaur[0] = new Graphic('Images/Dinosaur/dinosaurIdle.png',0,36);
 	/*dinosaur[0].hitbox[0] = 5;
 	dinosaur[0].hitbox[1] = 5;
-	dinosaur[0].hitbox[3] = 6;*/
+	dinosaur[0].hitbox[3] = 6;
 
 	dinosaur[1] = new Graphic('Images/Dinosaur/dinosaurRun1WB.png',0,36);
 	dinosaur[2] = new Graphic('Images/Dinosaur/dinosaurRun2WB.png',0,36);
@@ -99,7 +99,7 @@ function draw()
 		cactus[i].xPos = i * 50 + 50;
 		cactus[i].yPos = i * 50 + 50;
 		cactus[i].output();
-	}*/
+	}
 
 	cactus[cactusIndex].xPos = xLand - 72;
 	cactus[cactusIndex].yPos = yLand;
@@ -164,4 +164,4 @@ function draw()
 	xLand -= 5;
 	ellipse(mouseX, mouseY, 10, 10);
 
-}
+}*/
