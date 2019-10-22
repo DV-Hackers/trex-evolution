@@ -128,10 +128,19 @@ class Matrix
       }
       return vectFn;
     }
+
+    display()
+    {
+      for (let i = 0; i < this.mat.length; i++)
+      {
+        console.log(this.mat[i].join(', '));
+      }
+    }
+
   }
 
   //testing
-  const size = 3;
+  /*const size = 3;
   let myMatrix = new Matrix(size, size);
   for (let i = 0; i < size; i++) //fill matrix with random vals, 0 - 10
   {
@@ -140,27 +149,18 @@ class Matrix
       myMatrix.set(i, j, Math.floor(Math.random() * 11));
     }
   }
-  let newMatrix = new Matrix(myMatrix);
 
-  for (let i = 0; i < myMatrix.mat.length; i++) //print the matrix
-  {
-    console.log(myMatrix.mat[i].join(', '));
-  }
+  let newMatrix = new Matrix(myMatrix);
+  myMatrix.display();
   console.log('\n');
 
   function fn(x)
   {
     return x + 1;
   }
-  
   let fn1 = Matrix.vectorize(fn);
-
   let m = fn1(newMatrix);
-
-  for (let i = 0; i < m.mat.length; i++) //print the matrix
-  {
-    console.log(m.mat[i].join(', '));
-  }
+  m.display();
 
   /*console.log('\n');
   for (let i = 0; i < newMatrix.mat.length; i++) //print the matrix
@@ -181,3 +181,4 @@ class Matrix
   myMatrix.mult(vect)
   console.log('vector to multiply by: ' + vect);
   console.log('multiplication result: ' + myMatrix.mult(vect));*/
+export default Matrix
