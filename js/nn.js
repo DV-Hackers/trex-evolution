@@ -17,7 +17,7 @@ class LiteNN
     for (var i = 1; i < layers.length - 1; i++)
     {
       this.weights.push(new Matrix(layers[i+1], layers[i]));
-      this.biases.push(new Matrix(layers[i+1], 1, true));
+      this.biases.push(new Matrix(layers[i], 1, true));
     }
   }
 

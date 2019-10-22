@@ -5,6 +5,20 @@ class Matrix
         //This function "constructs" objects, so every time you call "new Matrix(..)" anywhere it executes this function
         //I want you to initialize a 2d array with the number of rows/cols specified by the parameters passed in. every value can just be 0 for now
         this.mat = [];
+        if (rows instanceof Matrix)
+        {
+          let oldMat = rows;
+          for (let i = 0; i < oldMat.mat.length; i++)
+          {
+            this.mat.push([]);
+            for (let j = 0; j < oldMat.mat[0].length; j++)
+            {
+              this.mat[i][j] = oldMat.mat[i][j];
+            }
+          }
+          return;
+        }
+
         if (cols != 0)
         {
           for (let r = 0; r < rows; r++)
@@ -97,10 +111,27 @@ class Matrix
         elem = activation(elem);
       }
     }
+
+    static vectorize(fn)
+    {
+      function vectFn(matrix)
+      {
+        let tempMat = new Matrix(matrix);
+        for (let i = 0; i < tempMat.mat.length; i++)
+        {
+          for (let j = 0; j < tempMat.mat[0].length; j++)
+          {
+            tempMat.mat[i][j] = fn(tempMat.mat[i][j]);
+          }
+        }
+        return tempMat;
+      }
+      return vectFn;
+    }
   }
 
   //testing
-  const size = 2;
+  const size = 3;
   let myMatrix = new Matrix(size, size);
   for (let i = 0; i < size; i++) //fill matrix with random vals, 0 - 10
   {
@@ -109,11 +140,34 @@ class Matrix
       myMatrix.set(i, j, Math.floor(Math.random() * 11));
     }
   }
+  let newMatrix = new Matrix(myMatrix);
+
   for (let i = 0; i < myMatrix.mat.length; i++) //print the matrix
   {
     console.log(myMatrix.mat[i].join(', '));
   }
+  console.log('\n');
 
+  function fn(x)
+  {
+    return x + 1;
+  }
+  
+  let fn1 = Matrix.vectorize(fn);
+
+  let m = fn1(newMatrix);
+
+  for (let i = 0; i < m.mat.length; i++) //print the matrix
+  {
+    console.log(m.mat[i].join(', '));
+  }
+
+  /*console.log('\n');
+  for (let i = 0; i < newMatrix.mat.length; i++) //print the matrix
+  {
+    console.log(newMatrix.mat[i].join(', '));
+  }*/
+  /*
   myMatrix.add(myMatrix.mat);
   for (let i = 0; i < myMatrix.mat.length; i++) //print the matrix
   {
@@ -126,4 +180,4 @@ class Matrix
 
   myMatrix.mult(vect)
   console.log('vector to multiply by: ' + vect);
-  console.log('multiplication result: ' + myMatrix.mult(vect));
+  console.log('multiplication result: ' + myMatrix.mult(vect));*/
