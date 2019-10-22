@@ -1,5 +1,4 @@
 import Matrix from "./matrix.js"
-//class Matrix{}
 
 class LiteNN
 {
