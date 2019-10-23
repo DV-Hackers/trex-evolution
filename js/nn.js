@@ -15,7 +15,7 @@ class LiteNN
     for (var i = 1; i < layers.length - 1; i++)
     {
       this.weights.push(new Matrix(layers[i+1], layers[i]));
-      this.biases.push(new Matrix(layers[i], 1, true));
+      this.biases.push(new Matrix(layers[i+1], 1, true));
     }
   }
 
@@ -25,6 +25,7 @@ class LiteNN
     x - list representing input into nn
     */
     let input = Matrix.arrayToMatrixVector(x); // inputs has to be a matrix to use the matrix class for multiplication
+      console.log('ff input: '); input.display();
     let layerOutput = input; // equals input to start
     let vectActivation = Matrix.vectorize(activation);
 
@@ -34,10 +35,14 @@ class LiteNN
       let tempOut;
       // do the matrix mult of inputs and the correct weight matrix, include activation and biases
       tempOut = this.weights[i].mult(layerOutput);
-      tempOut.add(biases[i]);
+      tempOut.add(this.biases[i]);
       tempOut = vectActivation(tempOut);
 
       layerOutput = tempOut;
+
+      // testing console logs
+      console.log('layer ' + (i+1) + ' output: ');
+      layerOutput.display();
     }
 
     return layerOutput;
@@ -57,5 +62,4 @@ let nn = new LiteNN(layers, activation);
 
 let inputs = [10, 20, 30];
 let output = nn.ff(inputs);
-console.log('hi');
-console.log(output);
+output.display();
