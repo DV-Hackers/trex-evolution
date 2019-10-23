@@ -41,7 +41,7 @@ class Matrix
       let tempMatrix = new Matrix(arr.length, 1);
       for (let i = 0; i < arr.length; i++)
       {
-        tempMatrix.set(i, 1, arr[i]);
+        tempMatrix.set(i, 0, arr[i]);
       }
 
       return tempMatrix;
@@ -52,8 +52,8 @@ class Matrix
       //This function takes in a list of numbers and I want you to multiply the matrix in question by this vector and return the result
       //HINT: make sure to check that vector is the right length, and then just iterate through each row of the matrix and calculate the dot product
       let matCols = this.mat[0].length;
-      let vectRows = vector.length;
-      let product = [];
+      let vectRows = vector.mat.length;
+      let productMat = new Matrix(this.mat.length, vector.mat[0].length);
       let tempSum = 0;
 
       if (matCols === vectRows) //condition for matrix multiplication being possible
@@ -61,8 +61,9 @@ class Matrix
         for (let r = 0; r < this.mat.length; r++)
         {
           for (let c = 0; c < this.mat[0].length; c++)
-            tempSum += this.mat[r][c] * vector[c];
-          product.push(tempSum);
+            tempSum += this.mat[r][c] * vector.mat[c][0];
+
+          productMat.set(r, 0, tempSum);
           tempSum = 0;
         }
       }
@@ -71,7 +72,7 @@ class Matrix
         throw "vector rows are not equal to matrix columns";
       }
 
-      return product;
+      return productMat;
     }
 
     set(r, c, val)
@@ -88,13 +89,13 @@ class Matrix
 
     add(inputMat)
     {
-      if (this.mat.length === inputMat.length && this.mat[0].length === inputMat[0].length)
+      if (this.mat.length === inputMat.mat.length && this.mat[0].length === inputMat.mat[0].length)
       {
         for (let r = 0; r < this.mat.length; r++)
         {
           for (let c = 0; c < this.mat[0].length; c++)
           {
-            this.mat[r][c] += inputMat[r][c];
+            this.mat[r][c] += inputMat.mat[r][c];
           }
         }
       }
