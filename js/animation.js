@@ -24,307 +24,340 @@ obstacleHitbox.push([[0,24],[1,23],[5,16],[6,15],[8,15],[9,16],[18,19],[22,16],[
 
 function preload()
 {
-	obstacleImage.push(loadImage('Images/Cactus/fourCactus.png'));
-	obstacleImage.push(loadImage('Images/Cactus/largeCactus.png'));
-	obstacleImage.push(loadImage('Images/Cactus/smallCactus.png'));
-	obstacleImage.push(loadImage('Images/Cactus/threeCactus.png'));
-	obstacleImage.push(loadImage('Images/Cactus/twoLargeCactus.png'));
-	obstacleImage.push(loadImage('Images/Cactus/twoSmallCactus.png'));
+    obstacleImage.push(loadImage('Images/Cactus/fourCactus.png'));
+    obstacleImage.push(loadImage('Images/Cactus/largeCactus.png'));
+    obstacleImage.push(loadImage('Images/Cactus/smallCactus.png'));
+    obstacleImage.push(loadImage('Images/Cactus/threeCactus.png'));
+    obstacleImage.push(loadImage('Images/Cactus/twoLargeCactus.png'));
+    obstacleImage.push(loadImage('Images/Cactus/twoSmallCactus.png'));
 
-	userImage.push(loadImage('Images/Dinosaur/dinosaurIdle.png'));
-	userImage.push(loadImage('Images/Dinosaur/dinosaurLose.png'));
-	userImage.push(loadImage('Images/Dinosaur/dinosaurRun1.png'));
-	userImage.push(loadImage('Images/Dinosaur/dinosaurRun2.png'));
+    userImage.push(loadImage('Images/Dinosaur/dinosaurIdle.png'));
+    userImage.push(loadImage('Images/Dinosaur/dinosaurLose.png'));
+    userImage.push(loadImage('Images/Dinosaur/dinosaurRun1.png'));
+    userImage.push(loadImage('Images/Dinosaur/dinosaurRun2.png'));
 
-	groundImage.push(loadImage('Images/Ground/ground.png'));
+    groundImage.push(loadImage('Images/Ground/ground.png'));
 }
 
 class Graphic
 {
-	constructor(x = width, y = yLevel)
-	{
-		this.x = x;
-		this.y = y;
-		this.picture;
-		this.hitbox;
-	}
+    constructor(x = width, y = yLevel)
+    {
+        this.x = x;
+        this.y = y;
+        this.picture;
+        this.hitbox;
+    }
 
-	move()
-	{
-		this.x -= 5;
-	}
+    move()
+    {
+        this.x -= 5;
+    }
 
-	show()
-	{
-		image(this.picture,this.x,this.y);
-	}
+    show()
+    {
+        image(this.picture,this.x,this.y);
+    }
 
-	showHitbox()
-	{
-		stroke('red');
-		for (let coord of this.hitbox)
-			point(coord[0] + this.x, coord[1] + this.y);
-		stroke(51);
-	}
+    showHitbox()
+    {
+        stroke('red');
+        for (let coord of this.hitbox)
+            point(coord[0] + this.x, coord[1] + this.y);
+        stroke(51);
+    }
 
-	get updatedHitbox()
-	{
-		let updatedHitbox = [];
-		for (let coord of this.hitbox)
-			updatedHitbox.push([coord[0] + this.x, coord[1] + this.y])
+    get updatedHitbox()
+    {
+        let updatedHitbox = [];
+        for (let coord of this.hitbox)
+            updatedHitbox.push([coord[0] + this.x, coord[1] + this.y])
 
 
-		return updatedHitbox
-	}
+        return updatedHitbox
+    }
 
 }
 
 class Ground extends Graphic
 {
-	constructor(x = width, y = yLevel, index = -1)
-	{
-		super(x, y);
-		if (index === -1)
-			this.picture = groundImage[Math.floor(Math.random()*groundImage.length)];
-		else
-			this.picture = groundImage[index];
-	}
+    constructor(x = width, y = yLevel, index = -1)
+    {
+        super(x, y);
+        if (index === -1)
+            this.picture = groundImage[Math.floor(Math.random()*groundImage.length)];
+        else
+            this.picture = groundImage[index];
+    }
 
-	good()
-	{
-		if (this.picture.width + this.x > 0)
-			return true;
-		else
-			return false;
-	}
+    good()
+    {
+        if (this.picture.width + this.x > 0)
+            return true;
+        else
+            return false;
+    }
 }
 
 class Obstacle extends Graphic
 {
-	constructor(x = width, y = yLevel, index = -1)
-	{
-		super(x, y);
-		if (index === -1)
-		{
-			this.picture = obstacleImage[Math.floor(Math.random()*obstacleImage.length)]; // choose random image from list to be an obstacle
-			this.hitbox = obstacleHitbox[obstacleImage.indexOf(this.picture)];
-		}
-		else
-		{
-			this.picture = obstacleImage[index];
-			this.hitbox = obstacleHitbox[index];
-		}
-	}
+    constructor(x = width, y = yLevel, index = -1)
+    {
+        super(x, y);
+        if (index === -1)
+        {
+            this.picture = obstacleImage[Math.floor(Math.random()*obstacleImage.length)]; // choose random image from list to be an obstacle
+            this.hitbox = obstacleHitbox[obstacleImage.indexOf(this.picture)];
+        }
+        else
+        {
+            this.picture = obstacleImage[index];
+            this.hitbox = obstacleHitbox[index];
+        }
+    }
 
-	good()
-	{
-		if (this.picture.width + this.x > 0)
-			return true;
-		else
-			return false;
-	}
+    good()
+    {
+        if (this.picture.width + this.x > 0)
+            return true;
+        else
+            return false;
+    }
 }
 
 class User extends Graphic
 {
-	constructor(x = xLevel, y = yLevel)
-	{
-		super(x, y);
-		this.jumpTimer = 10;
+    constructor(x = xLevel, y = yLevel)
+    {
+        super(x, y);
+        this.jumpTimer = 10;
 
-		this.pictureIndex = 0;
-		this.pictureTimer = 0;
-		this.pictureArray = userImage;
-		this.picture = this.pictureArray[0];
-		this.hitbox = userHitbox;
+        this.pictureIndex = 0;
+        this.pictureTimer = 0;
+        this.pictureArray = userImage;
+        this.picture = this.pictureArray[0];
+        this.hitbox = userHitbox;
 
-		this.score = 0;
+        this.score = 0;
 
-		this.alive = true;
-	}
+        this.alive = true;
+    }
 
-	updateScore()
-	{
-		if (this.alive)
-			this.score++;
-	}
+    updateScore()
+    {
+        if (this.alive)
+            this.score++;
+    }
 
-	show()
-	{
-		if (this.alive)
-		{
-			if (this.y < yLevel)
-				this.pictureIndex = 0;
-			else
-			{
-				if (this.pictureTimer >= 5)
-				{
-					if (this.pictureIndex === 2)
-						this.pictureIndex = 3;
-					else
-						this.pictureIndex = 2;
-					this.pictureTimer = 0;
-				}
-				this.pictureTimer++;
-			}
-		}
-		else
-			this.pictureIndex = 1;
+    show(index = -1)
+    {
+        if (this.alive)
+        {
+            if (this.y < yLevel)
+                this.pictureIndex = 0;
+            else
+            {
+                if (this.pictureTimer >= 5)
+                {
+                    if (this.pictureIndex === 2)
+                        this.pictureIndex = 3;
+                    else
+                        this.pictureIndex = 2;
+                    this.pictureTimer = 0;
+                }
+                this.pictureTimer++;
+            }
+        }
+        else
+            this.pictureIndex = 1;
 
-		this.picture = this.pictureArray[this.pictureIndex];
-		super.show();
-	}
+        if (index !== -1)
+            this.pictureIndex = index;
 
-	move()
-	{
-		if (this.alive)
-		{
-			this.y += 2*this.jumpTimer - 10;
-			this.jumpTimer += 0.3;
+        this.picture = this.pictureArray[this.pictureIndex];
+        super.show();
+    }
 
-			if (this.y >= yLevel)
-			{
-				this.y = yLevel;
-				this.jumpTimer = 10;
-			}
-		}
-		else
-		{
-			super.move();
-		}
-	}
+    move()
+    {
+        if (this.alive)
+        {
+            this.y += 2*this.jumpTimer - 10;
+            this.jumpTimer += 0.3;
 
-	jump()
-	{
-		this.jumpTimer = 0;
-	}
+            if (this.y >= yLevel)
+            {
+                this.y = yLevel;
+                this.jumpTimer = 10;
+            }
+        }
+        else
+        {
+            super.move();
+        }
+    }
 
-	updateStatus(testHitbox)
-	{
-		if (!this.alive)
-			return
-		for (let dinoCoord of this.updatedHitbox)
-		{
-			for (let testCoord of testHitbox)
-			{
-				if (dinoCoord[0] === testCoord[0])
-					if (dinoCoord[1] >= testCoord[1])
-					{
-						this.alive = false;
-						return false;
-					}
-			}
-		}
+    jump()
+    {
+        this.jumpTimer = 0;
+    }
 
-		return true;
-	}
+    updateStatus(testHitbox)
+    {
+        if (!this.alive)
+            return
+        for (let dinoCoord of this.updatedHitbox)
+        {
+            for (let testCoord of testHitbox)
+            {
+                if (dinoCoord[0] === testCoord[0])
+                    if (dinoCoord[1] >= testCoord[1])
+                    {
+                        this.alive = false;
+                        return false;
+                    }
+            }
+        }
+
+        return true;
+    }
+
 }
 
 let dinosaur = [];
 let cactus = [];
 let ground = [];
 let generation = 1;
+let pauseButton;
+let paused = false;
 function setup()
 {
-	createCanvas(600,500);
+    startNewGame();
+    createCanvas(600,500);
+    pauseButton = createButton('Pause Game');
+    pauseButton.position(0,0);
+    pauseButton.mousePressed(pauseGame);
 }
 
 function draw()
 {
-	background(255);
 
-	let alive = true;
+    background(255);
 
-	alive = false;
-	for (let element of dinosaur)
-		if (element.alive === true)
-		{
-			alive = true;
-			break;
-		}
+    let alive;
 
-	if (alive === false)
-	{
-		generation++;
-		startNewGame()
-	}
+    alive = false;
+    for (let element of dinosaur)
+        if (element.alive === true)
+        {
+            alive = true;
+            break;
+        }
+
+    while (ground.length*400 < width + 400)
+        ground.push(new Ground(400*ground.length));
 
 
-	while (ground.length*400 < width + 400)
-		ground.push(new Ground(400*ground.length));
+    for (let element of ground)
+    {
+        element.show();
+        if (alive && !paused)
+            element.move();
+    }
 
+    if (!ground[0].good())
+    {
+        ground.shift();
+    }
 
-	for (let element of ground)
-	{
-		element.show();
-		element.move();
-	}
+    if (cactus.length === 0)
+        cactus.push(new Obstacle());
 
-	if (!ground[0].good())
-	{
-		ground.shift();
-	}
+    for (let element of cactus)
+    {
+        if (cactus.length > 0)
+        {
+            for (let dinosaurMember of dinosaur)
+                if (dinosaurMember.x + dinosaurMember.picture.width >= cactus[0].x && cactus[0].x + cactus[0].picture.width >= dinosaurMember.x)
+                    dinosaurMember.updateStatus(cactus[0].updatedHitbox);
+        }
+        element.show();
+        if (alive && !paused)
+            element.move();
+    }
+    if (!cactus[0].good())
+    {
+        cactus.shift();
+    }
 
-	if (cactus.length === 0)
-		cactus.push(new Obstacle());
+    for (let element of dinosaur)
+    {
+        if (!paused)
+        {
+            element.updateScore();
+            element.show();
+        }
+        else
+            element.show(0);
+        if (alive && !paused)
+            element.move();
+    }
 
-	for (let element of cactus)
-	{
-		if (cactus.length > 0)
-		{
-			for (let dinosaurMember of dinosaur)
-				if (dinosaurMember.x + dinosaurMember.picture.width >= cactus[0].x && cactus[0].x + cactus[0].picture.width >= dinosaurMember.x)
-					dinosaurMember.updateStatus(cactus[0].updatedHitbox);
-		}
-		element.show();
-		element.move();
-	}
-	if (!cactus[0].good())
-	{
-		cactus.shift();
-	}
-
-	for (let element of dinosaur)
-	{
-		element.updateScore();
-		element.show();
-		element.move();
-	}
-
-	let i = 0;
-	for (let column = 0; column < width; column += 200)
-		for (let row = yLevel + 75; row < height; row += 15)
-		{
-			if (i >= dinosaur.length)
-				break;
-			text(`Gen ${generation} Dinosaur ${i} score: ${dinosaur[i].score}`,column,row);
-			i++;
-		}
+    let i = 0;
+    for (let column = 0; column < width; column += 200)
+        for (let row = yLevel + 75; row < height; row += 15)
+        {
+            if (i >= dinosaur.length)
+                break;
+            text(`Gen ${generation} Dinosaur ${i} score: ${dinosaur[i].score}`,column,row);
+            i++;
+        }
 
 }
 
 function jump(index)
 {
-	if (index < dinosaur.length)
-		dinosaur[index].jump();
-	else
-	{
-		throw "you called an index that doesn't correspond to a dinosaur";
-	}
+    if (index < dinosaur.length)
+        dinosaur[index].jump();
+    else
+    {
+        throw "you called an index that doesn't correspond to a dinosaur";
+    }
 }
 
 function keyPressed()
 {
-	if (key >= 0 && key <= 9)
-		if (dinosaur[key].y === yLevel)
-			dinosaur[key].jump();
+    if (keyCode  === 32)
+    {
+        stopGame();
+        dinosaur = [];
+        generation++;
+        startNewGame();
+    }
+    else
+        if (key >= 0 && key <= 9)
+            if (dinosaur[key].y === yLevel)
+                dinosaur[key].jump();
 }
 
 function startNewGame()
 {
-	dinosaur = [];
-	cactus = [];
-	ground = [];
-	for (let i = 0; i < numberOfDinosaurs; i++)
-		dinosaur.push(new User());
+    dinosaur = [];
+    for (let i = 0; i < numberOfDinosaurs; i++)
+        dinosaur.push(new User());
+}
+
+function stopGame()
+{
+    cactus = [];
+    ground = [];
+}
+
+
+function pauseGame()
+{
+    if (paused === true)
+        paused = false;
+    else
+        paused = true;
 }
