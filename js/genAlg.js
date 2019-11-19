@@ -9,9 +9,9 @@ class Population
     this.agents = [];
     for (let i = 0; i < this.popAmt; i++)
     {
-      agents.push(new Agent(phrase.length));
+      this.agents.push(new Agent(phrase.length));
     }
-    calcFitness();
+    this.calcFitness();
 
 
     this.matingPool = [];
@@ -19,34 +19,60 @@ class Population
 
   calcFitness()
   {
-    for (let i = 0; i < this.agents.length; i ++)
+    let totalFit = 0;
+    for (let i = 0; i < this.agents.length; i++)
     {
-      agents[i].calcFit(this.findPhrase);
+      this.agents[i].calcFit(this.findPhrase);
+      totalFit += this.agents[i].fitness;
+    }
+
+    for (let i = 0; i < this.agents.length; i++)
+    {
+        this.agents[i].fitness = this.agents[i].fitness / totalFit;
     }
   }
 
   buildMatingPool()
   {
     let amt = 100;
-    for (let i = 0; i < popAmt; i++)
+    for (let i = 0; i < amt; i++)
     {
-      let addAmt = agents[i].fitness * amt;
+      let addAmt = this.agents[i].fitness * amt;
       for (let j = 0; j < addAmt; j++)
-        this.matingPool.push(agents[i]);
+        this.matingPool.push(this.agents[i]);
     }
   }
 
   reproduce(mr)
   {
-    for (let i = 0; i < agents.length; i++)
+    for (let i = 0; i < this.agents.length; i++)
     {
       let parent1 = this.matingPool[Math.floor(Math.random() * this.matingPool.length)];
       let parent2 = this.matingPool[Math.floor(Math.random() * this.matingPool.length)];
       let child = parent1.crossOver(parent2);
-      child = child.mutate(mr);
+      child.mutate(mr);
+      return child;
     }
   }
-}
+
+  newPopulation()
+  {
+    let done = false;
+
+      console.log(this.agents);
+      this.calcFitness();
+      this.buildMatingPool();
+      let newPop = [];
+      for (let i = 0; i < this.agents.length; i++)
+      {
+        let child = this.reproduce(this.mutationRate);
+
+        newPop.push(child);
+      }
+      this.agents = newPop;
+    }
+  }
+
 
 class Agent
 {
@@ -56,7 +82,7 @@ class Agent
     this.phrase = [];
     for (let i = 0; i < phraseLen; i++)
     {
-      phrase.pushback(getRandomChar());
+      this.phrase.push(this.getRandomChar());
     }
   }
 
@@ -82,7 +108,7 @@ class Agent
 
   crossOver(other)
   {
-    let child = new Agent(this.phase.length);
+    let child = new Agent(this.phrase.length);
     for (let i = 0; i < this.phrase.length; i++)
     {
       if (Math.random() > 0.5)
@@ -99,11 +125,11 @@ class Agent
 
   mutate(mutationRate)
   {
-    for (let i = 0; i < this.phase.length; i++)
+    for (let i = 0; i < this.phrase.length; i++)
     {
       if (Math.random() <= mutationRate)
       {
-        this.phrase[i] = getRandomChar();
+        this.phrase[i] = this.getRandomChar();
       }
     }
   }
@@ -111,3 +137,7 @@ class Agent
 
 //driver code
 console.log("hi");
+let pop = new Population(200, 0.01, "hello world");
+pop.newPopulation();
+for (let i = 0; i < 100; i++)
+  pop.newPopulation();
