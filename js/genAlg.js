@@ -27,13 +27,15 @@ class Population
 
   buildMatingPool()
   {
+    this.matingPool = []; // empty the old pool
+    
     let totalFit = 0;
     for (let k = 0; k < this.agents.length; k++)
     {
       totalFit += this.agents[k].fitness;
     }
 
-    let amt = 1000;
+    let amt = this.popAmt * 3;
     for (let i = 0; i < this.agents.length; i++)
     {
       let addAmt = this.agents[i].fitness / totalFit * amt;
@@ -157,3 +159,4 @@ while (eval === null)
 }
 console.log(eval);
 console.log(x);
+console.log(pop.matingPool.length);
