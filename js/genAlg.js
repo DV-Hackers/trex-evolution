@@ -28,7 +28,7 @@ class Population
   buildMatingPool()
   {
     this.matingPool = []; // empty the old pool
-    
+
     let totalFit = 0;
     for (let k = 0; k < this.agents.length; k++)
     {
@@ -159,4 +159,3 @@ while (eval === null)
 }
 console.log(eval);
 console.log(x);
-console.log(pop.matingPool.length);
