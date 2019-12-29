@@ -4,6 +4,8 @@ class Matrix
     {
         //This function "constructs" objects, so every time you call "new Matrix(..)" anywhere it executes this function
         //I want you to initialize a 2d array with the number of rows/cols specified by the parameters passed in. every value can just be 0 for now
+        this.rows = rows;
+        this.cols = cols;
         this.mat = [];
         if (rows instanceof Matrix)
         {
@@ -26,7 +28,7 @@ class Matrix
             this.mat.push([]);
             for (let c = 0; c < cols; c++)
             {
-              if (zeroed) // so as to zero the bias matrices initially
+              if (zeroed) // to have an all 0 matrix, if desired
                 this.mat[r].push(0);
               else
                 this.mat[r].push(Math.random());
@@ -75,6 +77,18 @@ class Matrix
       return productMat;
     }
 
+    get(r, c)
+    {
+      if (this.mat.length < r || this.mat[0].length < c)
+      {
+        throw "coordinates out of bound";
+      }
+      else
+      {
+        return this.mat[r][c];
+      }
+    }
+
     set(r, c, val)
     {
       if (this.mat.length < r || this.mat[0].length < c)
@@ -105,6 +119,15 @@ class Matrix
       }
     }
 
+    divideAllElems(divisor)
+    {
+      for (let row of this.mat)
+      {
+        for (let elem of row)
+          elem = elem / divisor;
+      }
+    }
+
     applyActivation(activation)
     {
       for (let elem of this.mat)
@@ -128,6 +151,16 @@ class Matrix
         return tempMat;
       }
       return vectFn;
+    }
+
+    getRows()
+    {
+        return this.rows;
+    }
+
+    getCols()
+    {
+      return this.cols;
     }
 
     display()
