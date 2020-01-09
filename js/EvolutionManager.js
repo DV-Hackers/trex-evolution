@@ -2,13 +2,13 @@ class TrexManager
 {
   constructor(numAgents, mutRate, neuralLayers) // should layers be user defined or constant?
   {
-    let this.population = [];
-    let this.distances = []
-    let this.mutationRate = mutRate;
-    let this.matingPool = [];
-    let this.gameObject = new Game(); // Game class needs to be created/finished
+    this.population = [];
+    this.distances = []
+    this.mutationRate = mutRate;
+    this.matingPool = [];
+    this.gameObject = new Game(); // Game class needs to be created/finished
 
-    for (int i = 0; i < numAgents; i++)
+    for (let i = 0; i < numAgents; i++)
     {
       this.population.push(new NN(neuralLayers, activationFunction));
     }
@@ -41,7 +41,7 @@ class TrexManager
   calcFitness()
   {
     this.distances = [];
-    for (int i = 0; i < this.population.length; i++)
+    for (let i = 0; i < this.population.length; i++)
     {
       let tempDist = startTrial(i);
       this.distances.push(tempDist);
