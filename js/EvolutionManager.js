@@ -1,6 +1,6 @@
 class TrexManager
 {
-  constructor(numAgents, mutRate, neuralLayers) // should layers be user defined or constant?
+  constructor(numAgents, mutRate, neuralLayers)
   {
     let this.population = [];
     let this.distances = []
@@ -19,7 +19,6 @@ class TrexManager
   activationFunction()
   {
     // for the neural network
-    // hard coded, not user defined
   }
 
   startTrial(participantIndex)
@@ -82,7 +81,7 @@ class TrexManager
 
   evalPop()
   {
-    // what is the stopping condition? a Trex than can go 1 million units? or a certain number of generations?
+    // no stopping condition
   }
 
   newPopulation()
