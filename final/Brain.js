@@ -17,7 +17,9 @@ class Brain
   generateAction(/*obstacle*/ obType, obDist)
   {
     // uses NN feedforward with obstacle type and distance
-    return this.nn.feedForward([obType, obDist]);
+    let decisionVal = this.nn.feedForward([obType, obDist]);
+
+    // ranges to handle jumping/ducking/no action(running) ?
   }
 
   reproduce(other, mutationRate) //returns a new Brain

@@ -39,7 +39,7 @@ class NeuralNetwork
   feedForward(x)
   {
     let input = Matrix.arrayToMatrixVector(x); // inputs has to be a matrix to use the matrix class for multiplication
-    console.log('ff input: '); input.display();
+      //console.log('ff input: '); input.display();
     let layerOutput = input; // equals input to start
     let vectActivation = Matrix.vectorize(this.activation);
 
@@ -49,16 +49,16 @@ class NeuralNetwork
       let tempOut;
       // do the matrix mult of inputs and the correct weight matrix, include activation and biases
       tempOut = this.weights[i].mult(layerOutput);
-        console.log('weights: ' + (i+1)); this.weights[i].display();
+        //console.log('weights: ' + (i+1)); this.weights[i].display();
       tempOut.add(this.biases[i]);
-        console.log('biases: ' + (i+1)); this.biases[i].display();
+        //console.log('biases: ' + (i+1)); this.biases[i].display();
       tempOut = vectActivation(tempOut);
 
       layerOutput = tempOut;
 
       // testing console logs
-      console.log('layer ' + (i+1) + ' output: ');
-      layerOutput.display();
+      //console.log('layer ' + (i+1) + ' output: ');
+      //layerOutput.display();
     }
 
     return layerOutput;

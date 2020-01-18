@@ -186,5 +186,5 @@ class Matrix
     }
 
   }
-console.log("yes");
+
 export default Matrix
