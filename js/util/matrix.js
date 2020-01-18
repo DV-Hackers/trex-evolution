@@ -2,18 +2,18 @@ class Matrix
 {
     constructor(rows, cols, zeroed)
     {
-        //This function "constructs" objects, so every time you call "new Matrix(..)" anywhere it executes this function
-        //I want you to initialize a 2d array with the number of rows/cols specified by the parameters passed in. every value can just be 0 for now
         this.rows = rows;
         this.cols = cols;
         this.mat = [];
-        if (rows instanceof Matrix)
+        if (rows instanceof Matrix) // copy constructor condition
         {
           let oldMat = rows;
-          for (let i = 0; i < oldMat.mat.length; i++)
+          this.rows = oldMat.rows;
+          this.cols = oldMat.cols;
+          for (let i = 0; i < this.rows; i++)
           {
             this.mat.push([]);
-            for (let j = 0; j < oldMat.mat[0].length; j++)
+            for (let j = 0; j < this.cols; j++)
             {
               this.mat[i][j] = oldMat.mat[i][j];
             }
@@ -51,8 +51,6 @@ class Matrix
 
     mult(vector)
     {
-      //This function takes in a list of numbers and I want you to multiply the matrix in question by this vector and return the result
-      //HINT: make sure to check that vector is the right length, and then just iterate through each row of the matrix and calculate the dot product
       let matCols = this.mat[0].length;
       let vectRows = vector.mat.length;
       let productMat = new Matrix(this.mat.length, vector.mat[0].length);
@@ -119,15 +117,20 @@ class Matrix
       }
     }
 
-    divideAllElems(divisor)
+    scalarMult(scalar)
     {
-      for (let row of this.mat)
+      //this.mat.forEach(row => row.forEach(elem => elem = elem * scalar));
+
+      for (let r = 0; r < this.rows; r++)
       {
-        for (let elem of row)
-          elem = elem / divisor;
+        for (let c = 0; c < this.cols; c++)
+        {
+          this.mat[r][c] *= scalar;
+        }
       }
     }
 
+    /*
     applyActivation(activation)
     {
       for (let elem of this.mat)
@@ -135,12 +138,13 @@ class Matrix
         elem = activation(elem);
       }
     }
+    */
 
     static vectorize(fn)
     {
       function vectFn(matrix)
       {
-        let tempMat = new Matrix(matrix);
+        let tempMat = new Matrix(matrix); // suggestion: could make this alter the input arg instead of making a new matrix
         for (let i = 0; i < tempMat.mat.length; i++)
         {
           for (let j = 0; j < tempMat.mat[0].length; j++)
@@ -163,6 +167,16 @@ class Matrix
       return this.cols;
     }
 
+/* may use later, but the constructor works for copying currently
+    copy()
+    {
+      let copyMat = new Matrix(this.rows, this.cols, true); // an initially zero'd matrix
+      copyMat.add(this);
+
+      return copyMat;
+    }
+*/
+
     display()
     {
       for (let i = 0; i < this.mat.length; i++)
@@ -173,46 +187,4 @@ class Matrix
 
   }
 
-  //testing
-  /*const size = 3;
-  let myMatrix = new Matrix(size, size);
-  for (let i = 0; i < size; i++) //fill matrix with random vals, 0 - 10
-  {
-    for (let j = 0; j < size; j++)
-    {
-      myMatrix.set(i, j, Math.floor(Math.random() * 11));
-    }
-  }
-
-  let newMatrix = new Matrix(myMatrix);
-  myMatrix.display();
-  console.log('\n');
-
-  function fn(x)
-  {
-    return x + 1;
-  }
-  let fn1 = Matrix.vectorize(fn);
-  let m = fn1(newMatrix);
-  m.display();
-
-  /*console.log('\n');
-  for (let i = 0; i < newMatrix.mat.length; i++) //print the matrix
-  {
-    console.log(newMatrix.mat[i].join(', '));
-  }*/
-  /*
-  myMatrix.add(myMatrix.mat);
-  for (let i = 0; i < myMatrix.mat.length; i++) //print the matrix
-  {
-    console.log(myMatrix.mat[i].join(', '));
-  }
-
-  let vect = [];
-  for (let i = 0; i < size; i++) //fill vector with random vals, 0 - 10
-    vect.push(Math.floor(Math.random() * 11));
-
-  myMatrix.mult(vect)
-  console.log('vector to multiply by: ' + vect);
-  console.log('multiplication result: ' + myMatrix.mult(vect));*/
 export default Matrix
