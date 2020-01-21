@@ -119,7 +119,7 @@ class Matrix
 
     scalarMult(scalar)
     {
-      //this.mat.forEach(row => row.forEach(elem => elem = elem * scalar));
+      //this.mat.forEach(row => row.forEach(elem => elem * scalar)); fails b/c primatives are pass by value
 
       for (let r = 0; r < this.rows; r++)
       {
