@@ -19,7 +19,12 @@ class Brain
     // uses NN feedforward with obstacle type and distance
     let decisionVal = this.nn.feedForward([obType, obDist]);
 
-    // ranges to handle jumping/ducking/no action(running) ?
+    if (decisionVal > 0.5)
+      return 1;
+    else if (decisionVal < -0.5)
+      return -1;
+    else
+      return 0;
   }
 
   reproduce(other, mutationRate) //returns a new Brain
