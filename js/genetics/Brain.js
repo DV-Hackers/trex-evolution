@@ -7,17 +7,18 @@ class Brain
     this.fitness = 0;
 
     if (nn === undefined)
-    {
-      this.nn = new NeuralNetwork();
-    }
-    else
-      this.nn = nn;
+      nn = new NeuralNetwork();
+    else if (nn instanceof String)
+      nn = NeuralNetwork.deserialize(nn);
+
+    this.nn = nn;
   }
 
   generateAction(/*obstacle*/ obType, obDist)
   {
     // uses NN feedforward with obstacle type and distance
-    let decisionVal = this.nn.feedForward([obType, obDist]);
+    let decisionOutput = this.nn.feedForward([obType, obDist]);
+    let decisionVal = decisionOutput.mat[0][0];
 
     if (decisionVal > 0.5)
       return 1;
