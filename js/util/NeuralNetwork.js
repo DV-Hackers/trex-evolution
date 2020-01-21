@@ -105,6 +105,54 @@ class NeuralNetwork
     }
   }
 
+  serialize()
+  {
+    let serialNN = "";
+
+    let layerConfig = this.layers.join(' ');
+    serialNN += layerConfig + " @ ";
+
+    this.weights.forEach(wMatrix => wMatrix.mat.forEach(row => row.forEach(elem => serialNN += elem + ' ')));
+    this.biases.forEach(bMatrix  => bMatrix.mat.forEach(row => row.forEach(elem => serialNN += elem + ' ')));
+
+    return serialNN;
+  }
+
+  static deserialize(serialNN)
+  {
+    let tokens = serialNN.split(' ');
+
+    let layers = [];
+    let index = 0;
+    while (tokens[index] != '@')
+      layers.push(tokens[index++]);
+    index++; // clear the '@' signal token
+
+    let deserialNN = new NeuralNetwork(layers);
+
+    // fill weight matrices
+    deserialNN.weights.forEach(wMatrix =>
+      {
+        for (let r = 0; r < wMatrix.rows; r++)
+        {
+          for (let c = 0; c < wMatrix.cols; c++)
+            wMatrix.mat[r][c] = tokens[index++];
+        }
+      });
+
+    // fill bias matrices
+    deserialNN.biases.forEach(bMatrix =>
+      {
+        for (let r = 0; r < bMatrix.rows; r++)
+        {
+          for (let c = 0; c < bMatrix.cols; c++)
+            bMatrix.mat[r][c] = tokens[index++];
+        }
+      });
+
+    return deserialNN;
+  }
+
   display()
   {
     console.log("Displaying a NeuralNetwork:\n");
@@ -144,5 +192,12 @@ let nnChild = nn.crossOver(nn2);
 console.log("Displaying nnChild: ");
 nnChild.display();
 */
+
+/*let n = new NeuralNetwork();
+n.display();
+let nStr = n.serialize();
+console.log(nStr);
+let newN = NeuralNetwork.deserialize(nStr);
+newN.display();*/
 
 export default NeuralNetwork
