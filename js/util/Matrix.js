@@ -31,7 +31,12 @@ class Matrix
               if (zeroed) // to have an all 0 matrix, if desired
                 this.mat[r].push(0);
               else
-                this.mat[r].push(Math.random());
+              {
+                if (Math.random() > 0.5)
+                  this.mat[r].push(Math.random());
+                else
+                  this.mat[r].push(-Math.random());
+              }
 
             }
           }
@@ -187,4 +192,4 @@ class Matrix
 
   }
 
-export default Matrix
+//export default Matrix
