@@ -11,6 +11,7 @@ class Trex {
 		this.vy = 0
 		this.ducking = false
 		this.brain = null
+		this.alive = true;
 	}
 
 	jump() {
@@ -48,7 +49,7 @@ class Trex {
 	}
 
 	kill(score) {
-		// this.brain.fitness = score
+		this.brain.fitness = score
 		this.alive = false
 		console.log('trex killed')
 	}
