@@ -24,7 +24,7 @@ class Population
     {
       let parent1Index = parentPool[Math.floor(Math.random() * parentPool.length)];
       let parent2Index = parentPool[Math.floor(Math.random() * parentPool.length)];
-      let child = this.brains[parent1Index].reproduce(this.brains[parent2Index]);
+      let child = this.brains[parent1Index].reproduce(this.brains[parent2Index], this.mutationRate);
       newPop.push(child);
     }
 
