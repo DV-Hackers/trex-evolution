@@ -31,7 +31,7 @@ class World {
 	reset() {
 		this.currScore = 0
 		this.trexList.forEach(trex => {
-			trex.agent = null
+			trex.brains = null
 			trex.y = 0
 		})
 
@@ -72,11 +72,11 @@ class World {
 	}
 
 	getNextObstacle(trex) {
-		let min = { dist: worldConfig.width }
+		let min = { dist: worldConfig.width, type: 0 }
 		let tmp
 		for (let i = 0; i < this.obstacles.length; ++i) {
 			tmp = this.collide(trex, this.obstacles[i])
-			if (typeof tmpDist != 'object')
+			if (typeof tmp != 'object')
 				return { dist: 0, type: this.obstacles[i].type }
 			else
 				min = min.dist > tmp.dist ? tmp : min
