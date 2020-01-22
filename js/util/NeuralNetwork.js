@@ -1,4 +1,4 @@
-import Matrix from "./Matrix.js"
+//import Matrix from "./Matrix.js"
 
 const defaultLayers = [2, 3, 1];
 
@@ -32,7 +32,7 @@ class NeuralNetwork
     for (let i = 0; i < this.layers.length - 1; i++)
     {
       this.weights.push(new Matrix(this.layers[i+1], this.layers[i]));
-      this.biases.push(new Matrix(this.layers[i+1], 1, true));
+      this.biases.push(new Matrix(this.layers[i+1], 1/*, true*/));
     }
   }
 
@@ -200,4 +200,4 @@ console.log(nStr);
 let newN = NeuralNetwork.deserialize(nStr);
 newN.display();*/
 
-export default NeuralNetwork
+//export default NeuralNetwork
