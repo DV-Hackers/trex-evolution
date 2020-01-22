@@ -9,6 +9,7 @@ class Obstacle {
 		this.height = 10
 		this.x = worldConfig.width
 		this.y = 0
+		this.type = 0;
 	}
 
 	update() {
