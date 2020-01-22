@@ -17,11 +17,13 @@ class World {
 		let allDead = true
 
 		this.trexList.forEach(trex => {
-			if (this.hitObstacle(trex)) {
-				trex.kill(this.currScore)
+			if (trex.alive) {
+				if (this.hitObstacle(trex)) {
+					trex.kill(this.currScore)
+				}
+				else
+					allDead = false
 			}
-			else
-				allDead = false
 		})
 		this.updateObstacles()
 
@@ -30,11 +32,17 @@ class World {
 
 	reset() {
 		this.currScore = 0
+		let topScore = 0;
 		this.trexList.forEach(trex => {
 			trex.brains = null
+			trex.alive = true
 			trex.y = 0
+			obstacleConfig.vx = 2;
+			if (trex.brain.fitness > topScore)
+				topScore = trex.brain.fitness
 		})
 
+		console.log("top score: " + topScore)
 		this.obstacles = new Array()
 	}
 
@@ -108,7 +116,7 @@ class World {
 
 	renderP5() {
 		background(255)
-		this.trexList.forEach(trex => trex.renderP5())
+		this.trexList.forEach(trex => {if (trex.alive) trex.renderP5()})
 		this.obstacles.forEach(obs => obs.renderP5())
 	}
 
