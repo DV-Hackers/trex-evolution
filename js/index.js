@@ -20,7 +20,7 @@
 let sim
 function setup() {
 	createCanvas(400, 100)
-	sim = new Simulation(10, 0.15)
+	sim = new Simulation(100, 0.15)
 }
 
 function draw() {
