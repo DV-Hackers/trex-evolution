@@ -1,4 +1,4 @@
-class Population {
+/*class Population {
 	constructor(size, rate) {
 		this.size = size
 		this.brains = Array.from({length: size}).map(() => {
@@ -15,7 +15,7 @@ class Population {
 			}
 		})
 	}
-}
+}*/
 
 class Simulation {
 	constructor(size, mutationRate) {
@@ -27,7 +27,7 @@ class Simulation {
 	frame() {
 		this.world.trexList.map(trex => {
 			let next = this.world.getNextObstacle(trex)
-			let decision = trex.brain.genAction(next)
+			let decision = trex.brain.generateAction(next.dist, next.type)
 			trex.update(decision)
 		})
 
