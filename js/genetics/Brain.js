@@ -1,4 +1,4 @@
-import NeuralNetwork from "./NeuralNetwork.js"
+//import NeuralNetwork from "./NeuralNetwork.js"
 
 class Brain
 {
@@ -19,11 +19,12 @@ class Brain
     // uses NN feedforward with obstacle type and distance
     let decisionOutput = this.nn.feedForward([obType, obDist]);
     let decisionVal = decisionOutput.mat[0][0];
+    //console.log("decis val: " + decisionVal);
 
     if (decisionVal > 0.5)
       return 1;
     else if (decisionVal < -0.5)
-      return -1;
+      return 2;
     else
       return 0;
   }
@@ -70,4 +71,4 @@ b3.getNeuralNetwork().display();
 b3.generateAction(2, 25);
 */
 
-export default Brain
+//export default Brain
