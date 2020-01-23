@@ -1,11 +1,12 @@
 var obstacleConfig = {
 	vx: 2,
-	minDistance: 50
+	minDistance: 50,
+	maxWidth: 10
 }
 
 class Obstacle {
 	constructor() {
-		this.width = 10 + Math.floor(Math.random() * 5)
+		this.width = 10 + Math.floor(Math.random() * obstacleConfig.maxWidth)
 		this.height = 10
 		this.x = worldConfig.width
 		this.y = 0

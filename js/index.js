@@ -17,9 +17,13 @@
 //
 // })
 
+function updateUI(name, val) {
+	$(name).html(val)
+}
+
 let sim
 function setup() {
-	createCanvas(400, 100)
+	createCanvas(800, 200)
 	sim = new Simulation(100, 0.15)
 }
 

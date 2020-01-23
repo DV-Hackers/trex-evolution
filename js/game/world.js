@@ -1,8 +1,10 @@
 const worldConfig = {
-	height: 100,
-	width: 400,
-	gravity: -0.5
+	gravity: -0.5,
+	maxObsDist: 200,
+	width: 800,
+	height: 200
 }
+
 
 class World {
 	constructor(trexNum) {
@@ -51,7 +53,7 @@ class World {
 		this.obstacleTimer++
 		obstacleConfig.vx += 0.0002
 
-		if (this.obstacleTimer > obstacleConfig.minDistance + (Math.random() * 50))
+		if (this.obstacleTimer > obstacleConfig.minDistance + (Math.random() * worldConfig.maxObsDist))
 			this.addObstacle()
 
 		if (this.obstacles.length && this.obstacles[0].x < 0)
@@ -62,7 +64,7 @@ class World {
 
 	addObstacle() {
 		// if (this.currScore > 1000 && Math.random() < 0.15)
-		if (Math.random() > 0.5)
+		if (Math.random() > 0.5 && this.currScore > 1000)
 			this.obstacles.push(new Bird())
 		else
 			this.obstacles.push(new Obstacle())
