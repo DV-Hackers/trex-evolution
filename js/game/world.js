@@ -32,17 +32,18 @@ class World {
 
 	reset() {
 		this.currScore = 0
-		let topScore = 0;
+		let topScorer = this.trexList[0]
 		this.trexList.forEach(trex => {
 			trex.brains = null
 			trex.alive = true
 			trex.y = 0
 			obstacleConfig.vx = 2;
-			if (trex.brain.fitness > topScore)
-				topScore = trex.brain.fitness
+			if (trex.brain.fitness > topScorer.brain.fitness)
+				topScorer = trex
 		})
 
-		console.log("top score: " + topScore)
+		console.log("top score: " + topScorer.brain.fitness)
+		console.log(topScorer.brain.nn.serialize());
 		this.obstacles = new Array()
 	}
 
