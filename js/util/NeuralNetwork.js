@@ -1,6 +1,6 @@
 //import Matrix from "./Matrix.js"
 
-const defaultLayers = [2, 3, 1];
+const defaultLayers = [2, 2, 1];
 
 class NeuralNetwork
 {
