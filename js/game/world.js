@@ -1,6 +1,6 @@
 const worldConfig = {
 	gravity: -0.5,
-	maxObsDist: 200,
+	maxObsDist: 800,
 	width: 800,
 	height: 200
 }
@@ -83,12 +83,12 @@ class World {
 	}
 
 	getNextObstacle(trex) {
-		let min = { dist: worldConfig.width, type: 0 }
+		let min = { dist: worldConfig.width, /*type: 0,*/ y: 0 }
 		let tmp
 		for (let i = 0; i < this.obstacles.length; ++i) {
 			tmp = this.collide(trex, this.obstacles[i])
 			if (typeof tmp != 'object')
-				return { dist: 0, type: this.obstacles[i].type }
+				return { dist: 0, /*type: this.obstacles[i].type,*/ y: this.obstacles[i].y }
 			else
 				min = min.dist > tmp.dist ? tmp : min
 		}
@@ -113,7 +113,8 @@ class World {
 
 		return {
 			dist: obstacle.x - trex.x,
-			type: obstacle.type
+			/*type: obstacle.type,*/
+			y: obstacle.y
 		}
 	}
 

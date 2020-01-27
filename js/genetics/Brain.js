@@ -14,17 +14,17 @@ class Brain
     this.nn = nn;
   }
 
-  generateAction(/*obstacle*/ obType, obDist)
+  generateAction(obDist, /*obType,*/ obY)
   {
     // uses NN feedforward with obstacle type and distance
-    let decisionOutput = this.nn.feedForward([obType, obDist]);
+    let decisionOutput = this.nn.feedForward([/*obType,*/ obDist, obY]);
     let decisionVal = decisionOutput.mat[0][0];
     //console.log("decis val: " + decisionVal);
 
     if (decisionVal > 0.5)
       return 1;
     else if (decisionVal < -0.5)
-      return 2;
+      return 2
     else
       return 0;
   }
