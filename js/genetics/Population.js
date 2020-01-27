@@ -1,4 +1,5 @@
 //simport Brain from "./Brain.js"
+const maxOldTopBrains = 50;
 
 class Population
 {
@@ -7,6 +8,7 @@ class Population
     this.size = popSize;
     this.mutationRate = mutRate;
     this.brains = [];
+    this.oldTopBrains = [];
 
     for (let i = 0; i < this.size; i++)
     {
@@ -16,14 +18,21 @@ class Population
 
   newGeneration()
   {
-    console.log("new generation");
     let parentPool = this.createParentPool();
-    let newPop = [];
+    this.processTopBrains();
 
-    for (let i = 0; i < this.size; i++)
+    //this.oldTopBrains.forEach(br => console.log(br.fitness))
+    let newPop = Array.from(this.oldTopBrains); // initial value
+    //console.log("fitnesses:");
+    //newPop.forEach(brain => console.log(brain.fitness))
+
+    for (let i = newPop.length; i < this.size; i++)
     {
       let parent1Index = parentPool[Math.floor(Math.random() * parentPool.length)];
       let parent2Index = parentPool[Math.floor(Math.random() * parentPool.length)];
+      while (parent1Index === parent2Index)
+        parent2Index = parentPool[Math.floor(Math.random() * parentPool.length)];
+
       let child = this.brains[parent1Index].reproduce(this.brains[parent2Index], this.mutationRate);
       newPop.push(child);
     }
@@ -47,6 +56,36 @@ class Population
     }
 
     return parentPool;
+  }
+
+  processTopBrains()
+  {
+    let topBrain = this.brains[this.oldTopBrains.length];
+    for (let j = this.oldTopBrains.length + 1; j < this.brains.length; j++)
+    {
+      if (this.brains[j].fitness > topBrain.fitness)
+        topBrain = this.brains[j];
+    }
+
+    if (this.oldTopBrains.length === maxOldTopBrains)
+    {
+      let lowestTopIndex = 0;
+      for (let i = 1; i < this.oldTopBrains.length; i++)
+      {
+        if (this.oldTopBrains[i].fitness < this.oldTopBrains[lowestTopIndex].fitness)
+        {
+          lowestTopIndex = i;
+        }
+      }
+      //console.log("lowestIndex: " + lowestTopIndex);
+      //console.log("lowestTopVal " + this.oldTopBrains[lowestTopIndex].fitness);
+      if (topBrain.fitness > this.oldTopBrains[lowestTopIndex].fitness)
+        this.oldTopBrains.splice(lowestTopIndex, 1, topBrain);
+    }
+    else
+      this.oldTopBrains.push(topBrain);
+
+    //this.oldTopBrains.forEach(br => console.log(br.fitness))
   }
 }
 
