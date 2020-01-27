@@ -9,7 +9,7 @@ class Simulation {
 	frame() {
 		this.world.trexList.map(trex => {
 			let next = this.world.getNextObstacle(trex)
-			let decision = trex.brain.generateAction(next.dist, next.type)
+			let decision = trex.brain.generateAction(next.dist, /*next.type,*/ next.y)
 			trex.update(decision)
 		})
 
@@ -21,6 +21,7 @@ class Simulation {
 			this.world.setBrains(this.population.brains)
 			updateUI('#score', 0)
 			updateUI('#iteration', ++this.iteration)
+			console.log("generation: " + this.iteration);
 		}
 
 		// this.graphics.update(this.world.trexList, this.world.obstacles)
