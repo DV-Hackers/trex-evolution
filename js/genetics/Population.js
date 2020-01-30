@@ -19,12 +19,9 @@ class Population
   newGeneration()
   {
     let parentPool = this.createParentPool();
+    
     this.processTopBrains();
-
-    //this.oldTopBrains.forEach(br => console.log(br.fitness))
-    let newPop = Array.from(this.oldTopBrains); // initial value
-    //console.log("fitnesses:");
-    //newPop.forEach(brain => console.log(brain.fitness))
+    let newPop = Array.from(this.oldTopBrains); // initialize with the previous top scorers
 
     for (let i = newPop.length; i < this.size; i++)
     {
@@ -77,15 +74,12 @@ class Population
           lowestTopIndex = i;
         }
       }
-      //console.log("lowestIndex: " + lowestTopIndex);
-      //console.log("lowestTopVal " + this.oldTopBrains[lowestTopIndex].fitness);
+
       if (topBrain.fitness > this.oldTopBrains[lowestTopIndex].fitness)
         this.oldTopBrains.splice(lowestTopIndex, 1, topBrain);
     }
     else
       this.oldTopBrains.push(topBrain);
-
-    //this.oldTopBrains.forEach(br => console.log(br.fitness))
   }
 }
 
