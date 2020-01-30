@@ -19,7 +19,7 @@ class Population
   newGeneration()
   {
     let parentPool = this.createParentPool();
-    
+
     this.processTopBrains();
     let newPop = Array.from(this.oldTopBrains); // initialize with the previous top scorers
 
@@ -76,7 +76,10 @@ class Population
       }
 
       if (topBrain.fitness > this.oldTopBrains[lowestTopIndex].fitness)
-        this.oldTopBrains.splice(lowestTopIndex, 1, topBrain);
+      {
+        this.oldTopBrains.splice(lowestTopIndex, 1);
+        this.oldTopBrains.push(topBrain);
+      }
     }
     else
       this.oldTopBrains.push(topBrain);
