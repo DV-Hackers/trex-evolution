@@ -1,8 +1,37 @@
-#stage {
-  width: 50vw;
-  height: 50vh;
+@import url('https://fonts.googleapis.com/css?family=Kanit&display=swap');
+
+body {
+  background-color: #394648;
+  color: white;
+  text-align: center;
+  font-family: 'Kanit', sans-serif;
 }
 
 canvas {
-  border: solid;
+  border: black solid;
+}
+
+a:hover {
+  color: #D7F9F1;
+  font-style: oblique;
+}
+
+a {
+  color: white;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#desc {
+  width: 80%;
+  margin: auto;
 }

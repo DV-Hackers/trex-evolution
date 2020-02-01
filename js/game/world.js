@@ -119,7 +119,7 @@ class World {
 	}
 
 	renderP5() {
-		background(255)
+		background('#C6DABF')
 		this.trexList.forEach(trex => {if (trex.alive) trex.renderP5()})
 		this.obstacles.forEach(obs => obs.renderP5())
 	}
