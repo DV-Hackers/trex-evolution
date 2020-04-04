@@ -3,14 +3,21 @@ const maxOldTopBrains = 50;
 
 class Population
 {
-  constructor(popSize, mutRate)
+  constructor(popSize, mutRate, brainSeed)
   {
     this.size = popSize;
     this.mutationRate = mutRate;
     this.brains = [];
     this.oldTopBrains = [];
 
-    for (let i = 0; i < this.size; i++)
+    let seedBrainCount = 0;
+    if (brainSeed instanceof Array)
+    {
+      brainSeed.forEach(seed => this.brains.push(new Brain(seed)))
+      seedBrainCount = brainSeed.length;
+    }
+
+    for (let i = 0; i < this.size - seedBrainCount; i++)
     {
       this.brains.push(new Brain());
     }
@@ -18,10 +25,9 @@ class Population
 
   newGeneration()
   {
-    let parentPool = this.createParentPool();
-
     this.processTopBrains();
     let newPop = Array.from(this.oldTopBrains); // initialize with the previous top scorers
+    let parentPool = this.createParentPool();
 
     for (let i = newPop.length; i < this.size; i++)
     {
@@ -64,8 +70,9 @@ class Population
         topBrain = this.brains[j];
     }
 
-    if (this.oldTopBrains.length === maxOldTopBrains)
+    if (this.oldTopBrains.length === maxOldTopBrains) // max number of top brains reached
     {
+      // find the worst top brain
       let lowestTopIndex = 0;
       for (let i = 1; i < this.oldTopBrains.length; i++)
       {
@@ -75,13 +82,14 @@ class Population
         }
       }
 
+      // replace the worst top brain with the most recent best, if it is better
       if (topBrain.fitness > this.oldTopBrains[lowestTopIndex].fitness)
       {
         this.oldTopBrains.splice(lowestTopIndex, 1);
         this.oldTopBrains.push(topBrain);
       }
     }
-    else
+    else // max number of top brains not reached
       this.oldTopBrains.push(topBrain);
   }
 }

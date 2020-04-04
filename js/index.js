@@ -24,7 +24,7 @@ function updateUI(name, val) {
 let sim
 function setup() {
 	createCanvas(800, 200)
-	sim = new Simulation(500, 0.15)
+	sim = new Simulation(500, 0.15, seedPop)
 }
 
 function draw() {

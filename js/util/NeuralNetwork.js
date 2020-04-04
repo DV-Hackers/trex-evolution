@@ -125,7 +125,7 @@ class NeuralNetwork
     let layers = [];
     let index = 0;
     while (tokens[index] != '@')
-      layers.push(tokens[index++]);
+      layers.push(parseInt(tokens[index++], 10));
     index++; // clear the '@' signal token
 
     let deserialNN = new NeuralNetwork(layers);
@@ -136,7 +136,7 @@ class NeuralNetwork
         for (let r = 0; r < wMatrix.rows; r++)
         {
           for (let c = 0; c < wMatrix.cols; c++)
-            wMatrix.mat[r][c] = tokens[index++];
+            wMatrix.mat[r][c] = parseFloat(tokens[index++]);
         }
       });
 
@@ -146,7 +146,7 @@ class NeuralNetwork
         for (let r = 0; r < bMatrix.rows; r++)
         {
           for (let c = 0; c < bMatrix.cols; c++)
-            bMatrix.mat[r][c] = tokens[index++];
+            bMatrix.mat[r][c] = parseFloat(tokens[index++]);
         }
       });
 

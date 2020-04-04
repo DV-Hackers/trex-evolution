@@ -1,6 +1,6 @@
 class Simulation {
-	constructor(size, mutationRate) {
-		this.population = new Population(size, mutationRate)
+	constructor(size, mutationRate, seedPop) {
+		this.population = new Population(size, mutationRate, seedPop)
 		this.world = new World(size)
 		this.world.setBrains(this.population.brains)
 		this.iteration = 0

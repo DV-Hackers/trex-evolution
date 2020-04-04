@@ -8,7 +8,7 @@ class Brain
 
     if (nn === undefined)
       nn = new NeuralNetwork();
-    else if (nn instanceof String)
+    else if (typeof nn === "string" /*nn instanceof String*/)
       nn = NeuralNetwork.deserialize(nn);
 
     this.nn = nn;
